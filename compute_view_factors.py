@@ -24,9 +24,9 @@ import pvlib
 
 # ------------------------------------------------------------------
 MATERIALS = [
-    {"name": "glass", "stl": "EFACristal.stl"},
-     {"name": "stabilisor",  "stl": "EFAEstabilizador.stl"},
-     {"name": "fuselag",  "stl": "EFAFuselaje.stl"},
+    {"name": "glass", "stl": "GLASS.stl"},
+     {"name": "solid_1",  "stl": "SOLID_1.stl"},
+     {"name": "solid_2",  "stl": "SOLID_2.stl"},
 ]
 
 XDMF_MESH_PATH = "mesh_surface.xdmf"
