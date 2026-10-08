@@ -58,27 +58,23 @@ For each configured time, `pvlib` calculates apparent solar elevation and azimut
 
 For each triangle, the script calculates a direct-beam exposure factor
 $$
-\[
-f_i(t) = \max(0, \mathbf{n}_i \cdot \mathbf{s}(t))\,V_i(t),
-\]
+f_i(t) = \max(0, \mathbf{n}_i \cdot \mathbf{s}(t))\,V_i(t)
 $$
-where \(\mathbf{n}_i\) is the triangle face normal, \(\mathbf{s}\) points toward the sun, and \(V_i\) is one when the ray from that triangle is unobstructed and zero when another triangle blocks it. The incident solar flux is `DNI * f_i` in W/m².
+where \(\mathbf{n}_i\$) is the triangle face normal, \($\mathbf{s}\$) points toward the sun, and $\(V_i\)$ is one when the ray from that triangle is unobstructed and zero when another triangle blocks it. The incident solar flux is `DNI * $f_i$` in W/m².
 
 Despite the output variable name `view_factors`, these are direct-sun cosine and visibility factors. The calculation does not include diffuse sky radiation, surface reflection, or radiative exchange between mesh faces. It uses one ray per triangle and the hourly default `TIMES`, so shadow and DNI changes between configured times are held piecewise constant by the heat solver.
 
 ### Transient surface heat equation
 
-The solver uses a continuous, piecewise-linear temperature field on the triangulated surface and material-wise constant properties represented with discontinuous, piecewise-constant fields. For each material it applies density \(\rho\), specific heat \(c_p\), conductivity \(k\), and shell thickness \(d\). In surface notation, the implemented equation is
+The solver uses a continuous, piecewise-linear temperature field on the triangulated surface and material-wise constant properties represented with discontinuous, piecewise-constant fields. For each material it applies density $\(\rho\)$, specific heat $\(c_p\)$, conductivity $\(k\)$, and shell thickness $\(d\)$. In surface notation, the implemented equation is
 $$
-\[
 \rho c_p d\,\frac{\partial T}{\partial t}
 - \nabla_s \cdot (k d\,\nabla_s T)
 + (h_f + h_b)T
 = q_{sun} + (h_f + h_b)T_{amb}
 - \epsilon\sigma(T_{old}^4 - T_{amb}^4),
-\]
 $$
-where \(q_{sun}\) is the direct solar flux above, \(h_f\) and \(h_b\) are the two convection coefficients, and \(\sigma\) is the Stefan-Boltzmann constant. The initial temperature is `T_AMB`. The mass and conduction/convection terms are assembled in an implicit Euler step; the radiative term is evaluated from the previous time step (`u_n`), so it is explicit. The `emissivity` field contributes one radiative loss term as implemented in the script.
+where $\(q_{sun}\)$ is the direct solar flux above, $\(h_f\)$ and $\(h_b\)$ are the two convection coefficients, and \(\sigma\) is the Stefan-Boltzmann constant. The initial temperature is `T_AMB`. The mass and conduction/convection terms are assembled in an implicit Euler step; the radiative term is evaluated from the previous time step (`u_n`), so it is explicit. The `emissivity` field contributes one radiative loss term as implemented in the script.
 
 ## Outputs
 
